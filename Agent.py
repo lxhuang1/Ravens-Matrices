@@ -159,25 +159,7 @@ class Agent:
             print("possible answers: ", possibleAnswers)
             return -1        
            
-        		#try no change (look for same image)
-       # if self.ImagesEqual(startImage, endImageHorizontal):
-        #    print("Found images are the same horizontally")
-            #check that the solution with the transposed image works in the context of the entire problem. check for analogous vertical relationships
-         #   proposedAnswerImage = endImageVertical
-          #  #if self.SolutionWorks(startImage, endImageVertical, endImageHorizontal, proposedAnswerImage):
-           #     #print("solution is feasible")
-#            answer = self.findMatchingAnswer(proposedAnswerImage, problemFigures)
- #           if answer != -1:
-  #              return answer
-   #     if self.ImagesEqual(startImage, endImageVertical):
-    #        print("Found images are the same vertically")
-     #       #check that the solution with the transposed image works in the context of the entire problem. check for analogous horizontal relationships
-      #      proposedAnswerImage = endImageHorizontal
-       #    # if self.SolutionWorks(startImage, endImageHorizontal, endImageVertical, proposedAnswerImage):
-        #        #print("solution is feasible")
-         #   answer = self.findMatchingAnswer(proposedAnswerImage, problemFigures)
-          #  if answer != -1:
-           #     return answer   
+      
            
     
     def RollRight(self, image):
@@ -212,24 +194,7 @@ class Agent:
         
         return newImage
 
- #   def SolutionWorks(self, image1A, image1B, image2A, image2B):
-    #check that the four images given make sense in the context of the entire problem. Looks for matching relationships between images 1A/1B and 2A/2B
-    
-    	#check if images are the same (no transpose)
-  #      if self.ImagesEqual(image1A, image1B):
-   #         if self.ImagesEqual(image2A,image2B):
-    #            return True
-        
-		#check all transposes in transposeMethods    
-     #   for method in transposeMethods:
-      #      transposedImage = image1A.transpose(method)
-       #     if self.ImagesEqual(transposedImage, image1B):
-        #        if self.ImagesEqual(image2A.transpose(method),image2B):
-         #           return True
-        
-        # check other image transformations
-        
-     #   return False
+
 
     def findMatchingAnswer(self, targetImage, problemFigures, possibleAnswers):
     #loops through answers and tries to find one that matches the target image provided. Returns matching image if found, None if not
@@ -260,14 +225,6 @@ class Agent:
 
     def Heuristics(self, probDataMatrix, ansDataMatrix):
     # runs a set of short-cut heuristics to try to find an exact match answer choice. Returns -1 if none found
-
-        #equality heuristic, based on FuzzyEquals for bitmapSN
-        #ans = self.EqualityHeuristic(probDataMatrix, ansDataMatrix)
-        #if ans != -1:
-         #   return ans
-        
-        #eliminate answers in answer choices that are equal to corner figures in the problem if equivalent relationship not found in problem
-       # self.ElimAnswers(probDataMatrix, ansDataMatrix)
         
         #check if same number of incremental pixels added/subtracted as figure moves horizontally and vertically (can be increments unique per row/column). 
         #If so, return corresponding answer choice
@@ -275,53 +232,10 @@ class Agent:
         if ans != -1:
             return ans
   
-        #check if same incremental pixels added as figure moves horizontally and vertically (can be increments unique per row/column). 
-        #If so, return corresponding answer choice
-        #ans = self.IncrementChange(probDataMatrix, ansDataMatrix)
-        #if ans != -1:
-         #   return ans
-        
         #return -1 of none of the above heuristics yields an answer
         return -1
   
- #   def ElimAnswers(self, probDataMatrix, ansDataMatrix):
-    #eliminates any answers that are equal to a problem figure, if problem figure does not have equivalent relationship with other problem figures
-        
-  #      global eliminatedAnswers
-        
-   #     answerNum = 1
-    #    for answerFigure in ansDataMatrix:
-     #       if problemType == "2x2":
-      #          #check if answer matches B, if so, A must match C. If not, answer is eliminated
-       #         if self.FuzzyEquals(answerFigure[0],probDataMatrix[1,0]):
-        #            if not self.FuzzyEquals(probDataMatrix[0,0],probDataMatrix[2,0]):
-         #               eliminatedAnswers.append(answerNum)
-                #check if answer matches C, if so A must match B. If not, answer is eliminated
-          #      elif self.FuzzyEquals(answerFigure[0],probDataMatrix[2,0]):
-           #         if not self.FuzzyEquals(probDataMatrix[0,0],probDataMatrix[1,0]):
-            #            eliminatedAnswers.append(answerNum)
-  #          else:
-   #             #check if answer matches C, if so, A must match G and B must match H. If not, answer is eliminated
-    #            if self.FuzzyEquals(answerFigure[0],probDataMatrix[2,0]):
-     #               print("Answer ", answerNum, "matches C")
-      #              if not (self.FuzzyEquals(probDataMatrix[0,0],probDataMatrix[6,0]) and self.FuzzyEquals(probDataMatrix[1,0],probDataMatrix[7,0])):
-       #                 eliminatedAnswers.append(answerNum)
-        #        #check if answer matches G, if so A must match C and D must match F. If not, answer is eliminated
-         #       elif self.FuzzyEquals(answerFigure[0],probDataMatrix[6,0]):
-          #          print("Answer ", answerNum, "matches G")
-           #         print("Does A match C?")
-            #        print(self.FuzzyEquals(probDataMatrix[0,0],probDataMatrix[2,0]))
-             #       print("A: ", probDataMatrix[0,0])
-              #      print("C: ", probDataMatrix[2,0])
-               #     print("Does D match F?")
-                #    print(self.FuzzyEquals(probDataMatrix[3,0],probDataMatrix[5,0]))
-                 #   print("D: ", probDataMatrix[3,0])
-                  #  print("F: ", probDataMatrix[5,0])
-                   # if not (self.FuzzyEquals(probDataMatrix[0,0],probDataMatrix[2,0]) and self.FuzzyEquals(probDataMatrix[3,0],probDataMatrix[5,0])):
-   #                     eliminatedAnswers.append(answerNum)
-    #        answerNum = answerNum+1
-        
-     #   print("Eliminated Answers: ", eliminatedAnswers)        
+ 
         
   
     def IncrementChange(self, probDataMatrix, ansDataMatrix):
@@ -392,13 +306,7 @@ class Agent:
                         print("possible answer: ", ansChoice, "number of pixels: ", answer[1])
                         possibleAnswers.append(ansChoice)
                     ansChoice = ansChoice +1
-                
-              #  print("Original Possible Answers: ", possibleAnswers)
-                
-                #Eliminate anything that's in eliminatedAnswers
-               # possibleAnswers = [x for x in possibleAnswers if x not in eliminatedAnswers]
-                
-               # print("Possible Answers after removing eliminated answers: ", possibleAnswers)
+               
                 
                 if len(possibleAnswers) == 1:
                     print("Found Answer with incremental change heuristic: Answer Choice ", possibleAnswers[0])
@@ -406,36 +314,6 @@ class Agent:
                 
         return -1
   
-  
-   # def EqualityHeuristic(self, probDataMatrix, ansDataMatrix):
-    #checks if the figure remains unchanged across rows or columns, returns corresponding answer if so
-    
-    #    targetSN = 0
-        
-     #   if problemType == "2x2":
-      #      if self.FuzzyEquals(probDataMatrix[1,0], probDataMatrix[0,0]):
-       #         targetSN = probDataMatrix[2,0]
-        #        print("A matches B, targetSN (from C): ", targetSN)
-         #   elif self.FuzzyEquals(probDataMatrix[2,0],probDataMatrix[0,0]):
-          #      targetSN = probDataMatrix[1,0]
-           #     print("A matches C, targetSN (from B): ", targetSN)
-       # else:
-        #    if self.FuzzyEquals(probDataMatrix[2,0],probDataMatrix[0,0]) and self.FuzzyEquals(probDataMatrix[5,0],probDataMatrix[3,0]):
-         #       targetSN = probDataMatrix[6,0]
-          #      print("Horizontal Match, targetSN (from G): ", targetSN)
-           # elif self.FuzzyEquals(probDataMatrix[6,0],probDataMatrix[0,0]) and self.FuzzyEquals(probDataMatrix[7,0],probDataMatrix[1,0]):
-            #    targetSN = probDataMatrix[2,0]
-             #   print("VerticalMatch, targetSN (from C): ", targetSN)
-                
-        #if targetSN != 0:
-         #   ansChoice = 1
-          #  for answer in ansDataMatrix:
-           #     if self.FuzzyEquals(answer[0],targetSN):
-            #        print("Found Answer with equality heuristic: Answer Choice ", ansChoice)
-             #       return ansChoice
-              #  ansChoice = ansChoice +1
-       # return -1
-    
     
     def FuzzyEquals(self,a,b):
     # bitmapSN considered equal if within error rate given by equalityErrorRate
@@ -503,9 +381,6 @@ class Agent:
             answerIndex = 1+answerIndex
         print("ErrorVector for all Answers: ",errorVector)
         
-        #remove eliminated Answers from consideration by making them negative error values
-      #  for answer in eliminatedAnswers:
-       #     errorVector[answer-1] = errorVector[answer-1]*-1
         
         minError = min(i for i in errorVector if i >= 0)
         likelyAns = errorVector.index(minError)+1
@@ -521,10 +396,6 @@ class Agent:
     # attribute #3: bottomWeight - number of black pixels in bottom-half of figure
     # attribute #4: leftWeight - number of black pixels in left-half of figure
     # attribute #5: rightWeight - number of black pixels in right-half of figure
-    # attribute #6: midVerticalWeight - number or black pixels in middle 25%-75% of figure (along X-axis)
-    # attribute #7: sideVerticalWeight - number of black pixels on side of figure (<25%, >75%, along X-axis)
-    # attribute #8: midHorizontalWeight - number of black pixels in middle 25%-75% of figure (along Y-axis)
-    # attribute #9: sideHorizontalWeight - number of black pixels on side of figure (<25%, >75%, along Y-axis)
     
         dataMatrix = np.zeros((len(names),6))
  
@@ -537,8 +408,7 @@ class Agent:
             pixels = list(im.getdata(0))
             bitmapSN, totBlack = 0,0
             topWeight, bottomWeight, leftWeight, rightWeight = 1,1,1,1
-         #   midVerticalWeight, sideVerticalWeight, midHorizontalWeight, sideHorizontalWeight = 1,1,1,1
-            #toplftWeightBlack,midrightWeightBlack = 0,0,0,0
+
             for pixelVal in pixels:
                 # only execute for black pixels, defined as any value that is 0
                 if pixelVal < 128:
@@ -563,25 +433,6 @@ class Agent:
                     else:
                         rightWeight=rightWeight+1
                     
-                    #attribute #6,7
-               #     if currXVal > xsize/4 and currXVal < xsize*3/4:
-                #        midVerticalWeight = midVerticalWeight+1
-                 #   else:
-                  #      sideVerticalWeight = sideVerticalWeight+1
-                    
-                    #attribute #8,9
-          #          if currYVal > ysize/4 and currYVal < ysize*3/4:
-           #             midHorizontalWeight = midHorizontalWeight+1
-            #        else:
-             #           sideHorizontalWeight = sideHorizontalWeight+1
-                    
-                    #attribute #2
-                    #toplftWeightBlack = toplftWeightBlack + currXVal + currYVal
-                    
-                    #attribute #3
-                    #xValMidRight = abs(currXVal - midRightX)
-                    #yValMidRight = abs(currYVal - midRightY)
-                    #midrightWeightBlack = midrightWeightBlack + xValMidRight + yValMidRight
                     
                 pixCounter = pixCounter + 1   
             dataMatrix[imageCounter,0] = bitmapSN
@@ -590,11 +441,7 @@ class Agent:
             dataMatrix[imageCounter,3] = bottomWeight
             dataMatrix[imageCounter,4] = leftWeight
             dataMatrix[imageCounter,5] = rightWeight
-           # dataMatrix[imageCounter,6] = midVerticalWeight 
-            #dataMatrix[imageCounter,7] = sideVerticalWeight
-          #  dataMatrix[imageCounter,8] = midHorizontalWeight
-           # dataMatrix[imageCounter,9] = sideHorizontalWeight
-            
+           
             imageCounter = imageCounter+1
         return dataMatrix   
         
@@ -602,39 +449,4 @@ class Agent:
 
                     
         
-        #compares number of total black pixels and returns corresponding answer choice
-        #find transformation factor between A and B (difference) and apply it to C, see if any match
-        
-        #transFactorB = probDataMatrix[0,1]/probDataMatrix[0,0]
-        #print("Transformation factor for total black pixels: ", transFactorB)
-        #matchValue = probDataMatrix[0,2]*transFactorB
-        
-        #candidateAnswers = []
-        #ansNumber = 1
-        #considered to be a match if totalBlacks within 100 pixels of each other
-        #for element in ansDataMatrix[0]:
-         #   if element < matchValue+40 and element > matchValue-40:
-          #      candidateAnswers.append(ansNumber)
-           # ansNumber = ansNumber+1
-        
-       # print("Possible answers from black pixel count: ", candidateAnswers) 
-        #if len(candidateAnswers) == 1:
-         #   return candidateAnswers[0] 
-               
-        #compares weighted black pixels and returns closest corresponding answer choice
-        #newAnswers=[]
-        #ansNumber = 1
-        #transFactorB = probDataMatrix[1,1]-probDataMatrix[1,0]
-        #print("Transformation factor for weighted black pixels: ", transFactorB)
-        #matchValue = probDataMatrix[1,2]+transFactorB
-        #for element in candidateAnswers:
-         #   if ansDataMatrix[1,element-1] < matchValue+150000 and ansDataMatrix[1,element-1] > matchValue-150000:
-               # newAnswers.append(element)    
-        
-        #print("Possible answers from weighted black pixel count: ", newAnswers) 
-        #if len(newAnswers) == 1:
-         #   return newAnswers[0]
-        
-        
-        #print(probDataMatrix)
-        #print(ansDataMatrix)  
+       
